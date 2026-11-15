@@ -30,16 +30,23 @@ def hierarchy(employees):
             print("  -", team)
 
 
-def svodka(employees):
+def prepare(employees):
     departments = {}
-
+        
     for member in employees:
         department = member["Департамент"]
         oklad = member["Оклад"]
         if department not in departments:
             departments[department] = []
         departments[department].append(oklad)
+    return departments
 
+
+
+def svodka(employees):
+
+    departments = prepare(employees)
+    
     for i in departments:
         print(i)
         print("Сотрудников:", len(departments[i]))
@@ -51,14 +58,7 @@ def svodka(employees):
 
 
 def svodka_csv(employees, output_file="svodka.csv"):
-    departments = {}
-
-    for member in employees:
-        department = member["Департамент"]
-        oklad = member["Оклад"]
-        if department not in departments:
-            departments[department] = []
-        departments[department].append(oklad)
+    departments = prepare(employees)
 
     with open(output_file, "w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f, delimiter=";")
